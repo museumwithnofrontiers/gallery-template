@@ -1,0 +1,56 @@
+/*
+ * Global styles shared by every __SITE_NAME__ view: the palette the views and the
+ * shell reference. The building blocks the legacy gallery's own site.css
+ * duplicated (panels, selects, buttons, prose, project chips) are the
+ * layout's `mwnf-` prefixed content classes now (`@museumwnf/viewer-layout/style.css`,
+ * imported in main.js) — this file carries only what is actually this
+ * gallery's own: the palette, and the page reset.
+ *
+ * Page chrome — header, banner, navigation, footer surfaces — is themed
+ * through theme/tokens.css instead; this file is the website's own content
+ * layer.
+ */
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Condensed:ital,wght@0,300;0,400;0,700;1,400&family=Roboto:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap');
+
+/* ── Palette ────────────────────────────────────────────────────────────────
+   TODO(webdesigner): this is carpets' own palette (the reference site this
+   template was built from), carried over unchanged so the template stays a
+   real, working gallery. Replace every value below with your own gallery's
+   colours — see "Webdesigner — theming the website" in README.md.
+   --theme-dark-rgb is the same colour as --theme-dark in a form the
+   translucent overlays can take an alpha on, so a palette change never has
+   to be chased into a component. */
+:root {
+  --theme-dark:        #504819;  /* banner, header, footer */
+  --theme-dark-rgb:    80, 72, 25;
+  --theme-medium-dark: #6b612b;  /* dark menu items */
+  --theme-medium:      #7e743e;  /* text background, search button */
+  --theme-light:       #91864d;  /* light menu items */
+  --background-color:  #fffff0;  /* page background */
+
+  --shadow-grey:  #707070;
+  --link-blue:    #0000ff;
+
+  /* The other MWNF virtual museums' own accents, for Home.vue's sibling-museum
+     tiles — not the source-project chip on the item sheet, which is
+     an `mwnf-chip--<family>` class now, themed by `--mwnf-project-*` (its defaults
+     already carry these same legacy colours, so nothing overrides them here). */
+  --dia-yellow: #ffcc00;  /* Discover Islamic Art (ISL / EPM) */
+  --dba-blue:   #001d66;  /* Discover Baroque Art (DBA / BAR) */
+  --sh-red:     #900000;  /* Sharing History (AWE) */
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background: var(--background-color);
+  color: #1a1a1a;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  overflow-x: hidden;
+}
+
+html[dir='rtl'] body { direction: rtl; }
+
+a { color: inherit; }

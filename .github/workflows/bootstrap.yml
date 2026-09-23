@@ -1,0 +1,124 @@
+name: Verify repository settings
+
+# A repository created from this template inherits FILES ONLY. Branch
+# protection, Pages enablement, auto-merge, Dependabot security updates, and
+# CodeQL's scanned-language list are repository *settings*, which "Use this
+# template" does not copy. GITHUB_TOKEN can never manage repository
+# administration -- no permission grants it that, at any level. So this
+# workflow does not attempt any of those changes itself; scripts/setup-repo.sh
+# (or .ps1) makes all six, once, as the developer, through their own `gh auth`
+# session. This workflow only VERIFIES that setup happened -- it is
+# read-only, on purpose, and changes nothing.
+#
+# Most of these settings cannot even be verified by reading, under
+# GITHUB_TOKEN: `repos/$REPO/branches/main/protection`,
+# `repos/$REPO/automated-security-fixes` (Dependabot security updates) and
+# `repos/$REPO/code-scanning/default-setup` (CodeQL's scanned languages) all
+# require admin on the repo just to READ, so each call 403s regardless of
+# whether the setting is already correct. `allow_auto_merge` and
+# `delete_branch_on_merge` are worse: GitHub silently omits both fields from
+# the repository payload for a non-admin reader, even when they are
+# genuinely true, so there is no way to tell "true" from "never set" by
+# reading at all.
+#
+# Instead, setup-repo.sh/.ps1 sets a repository variable
+# (GALLERY_TEMPLATE_SETUP_COMPLETE) to a timestamp as its LAST step, reached
+# only once every preceding step has succeeded (both scripts abort on their
+# first error, then re-verify everything fresh before writing the marker).
+# This workflow reads that variable -- the `vars` context needs no
+# permission grant -- as a stand-in for those otherwise unreadable settings.
+#
+# It is idempotent: safe to re-run any time from the Actions tab ("Run
+# workflow"), and it runs automatically on the first push (the commit "Use
+# this template" creates on a new repository) -- for example, re-run it
+# after running the setup script to confirm everything is now in place.
+#
+# There is deliberately no .github/workflows/codeql.yml here. This
+# organization enforces an org-wide CodeQL "default setup" that every new
+# repository gets automatically. *Disabling* it, or switching a repo to a
+# custom ("advanced") workflow instead, is org-locked. *Extending* default
+# setup's language list, by contrast, is an ordinary repo-admin operation --
+# setup-repo.sh/.ps1 adds javascript-typescript so it scans the application
+# code too. See README.md.
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: read
+
+concurrency:
+  group: bootstrap
+  cancel-in-progress: false
+
+jobs:
+  verify:
+    # Never touch the template repository's own settings.
+    if: ${{ !endsWith(github.repository, '/gallery-template') }}
+    runs-on: ubuntu-latest
+    env:
+      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      REPO: ${{ github.repository }}
+    steps:
+      - name: Verify GitHub Pages is enabled
+        id: pages
+        continue-on-error: true
+        run: |
+          if gh api "repos/$REPO/pages" >/dev/null 2>&1; then
+            echo "Pages is enabled."
+          else
+            echo "::error::GitHub Pages is not enabled yet."
+            exit 1
+          fi
+
+      - name: Verify the main branch ruleset exists
+        id: ruleset
+        continue-on-error: true
+        run: |
+          existing_id=$(gh api "repos/$REPO/rulesets" --jq '.[] | select(.name=="main-requires-pr") | .id' 2>/dev/null || true)
+          if [ -n "$existing_id" ]; then
+            echo "Ruleset 'main-requires-pr' exists (id $existing_id)."
+          else
+            echo "::error::Ruleset 'main-requires-pr' does not exist yet."
+            exit 1
+          fi
+
+      - name: Verify visibility (CodeQL requires a public repo on this plan)
+        id: visibility
+        continue-on-error: true
+        run: |
+          private=$(gh api "repos/$REPO" --jq .private)
+          if [ "$private" = "true" ]; then
+            echo "::error::This repository is PRIVATE. On the museumwithnofrontiers organization's GitHub Free plan, CodeQL code scanning only runs on PUBLIC repositories, and CodeQL is one of the required checks on main, so pull requests will NEVER be mergeable until this repository is public. Fix it with:"
+            echo "::error::gh api -X PATCH repos/$REPO -f private=false"
+            echo "::error::(or Settings > General > Danger Zone > Change repository visibility)."
+            exit 1
+          fi
+          echo "Repository is public -- CodeQL will run and can satisfy the required check."
+
+      - name: Verify branch protection, auto-merge, Dependabot and CodeQL language coverage were set up
+        id: setup-complete
+        continue-on-error: true
+        env:
+          SETUP_COMPLETE: ${{ vars.GALLERY_TEMPLATE_SETUP_COMPLETE }}
+        run: |
+          if [ -n "$SETUP_COMPLETE" ]; then
+            echo "Setup completion marker found (set $SETUP_COMPLETE). Branch protection (the four required CI checks), allow_auto_merge, delete_branch_on_merge, Dependabot automated security fixes, and CodeQL's extended language list were all confirmed by setup-repo.sh/.ps1 before it set this marker as its last action."
+          else
+            echo "::error::The GALLERY_TEMPLATE_SETUP_COMPLETE repository variable is not set. GITHUB_TOKEN cannot read branch protection, allow_auto_merge, delete_branch_on_merge, Dependabot automated security fixes, or CodeQL's language list without admin rights, so this workflow relies on this marker instead of reading them directly."
+            exit 1
+          fi
+
+      - name: Fail loudly if anything needs a manual step
+        if: >-
+          steps.pages.outcome == 'failure' ||
+          steps.ruleset.outcome == 'failure' ||
+          steps.visibility.outcome == 'failure' ||
+          steps.setup-complete.outcome == 'failure'
+        run: |
+          echo "::error::This workflow run is being marked FAILED on purpose: repository setup is not complete yet (GITHUB_TOKEN can never manage repository administration -- see the comment at the top of this file). Run this one command, as yourself:"
+          echo "::error::./scripts/setup-repo.sh   (or scripts/setup-repo.ps1 on Windows) -- requires 'gh auth login' once, if you have not already."
+          echo "::error::Then re-run this workflow from the Actions tab to confirm everything is now in place."
+          exit 1

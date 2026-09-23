@@ -1,0 +1,133 @@
+/*
+ * Escape hatch for styling beyond tokens.css.
+ *
+ * The legacy gallery is a fixed-width page column with edge-to-edge chrome
+ * inside it, a six-column menu bar, and an upper-cased title and menu. What a
+ * token cannot express is restated here, on PageShell's own classes.
+ */
+
+/* The legacy site was a 1350px column centred on the viewport, with a drop
+   shadow marking its edges. */
+.mwnf-page {
+  width: 1350px;
+  max-width: 100vw;
+  box-shadow: 0 2px 8px 2px var(--shadow-grey, #707070);
+}
+
+/* The header stays put while the page scrolls; the navigation does not,
+   because the language switcher makes the header's height variable. */
+.mwnf-header {
+  position: sticky;
+  top: 0;
+  z-index: 90;
+}
+.mwnf-nav {
+  z-index: 89;
+}
+
+/* The header row: the mark, the centred title cell, the tools at the end. */
+.mwnf-header__inner {
+  min-height: 80px;
+  padding-inline: 14px 12px;
+}
+.mwnf-header__title {
+  text-transform: uppercase;
+}
+.mwnf-header__search-input {
+  margin-inline-end: 5px;
+}
+
+/* The menu: one equal column per entry, alternating the two menu shades,
+   upper-cased in CSS so each entry is stored in its natural case — the only
+   form a translator can work with, and the only form that means anything in
+   Arabic. */
+.mwnf-nav__bar {
+  display: block;
+}
+.mwnf-nav__links {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  width: 100%;
+}
+.mwnf-nav__links li {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 28px;
+}
+.mwnf-nav__links li:nth-child(odd) { background: var(--theme-medium-dark); }
+.mwnf-nav__links li:nth-child(even) { background: var(--theme-light); }
+.mwnf-nav__link {
+  width: 100%;
+  text-align: center;
+  padding: 2px 4px;
+  text-transform: uppercase;
+}
+.mwnf-nav__link--active {
+  background: rgba(0, 0, 0, 0.18);
+  text-decoration: none;
+}
+.mwnf-nav__notice-title {
+  font-weight: 700;
+}
+
+/* The banner is edge to edge inside the column. */
+.mwnf-banner {
+  padding-inline: 0;
+}
+.mwnf-banner--strip .mwnf-banner__title {
+  font-weight: 700;
+}
+.mwnf-banner--strip .mwnf-banner__enter {
+  text-decoration: none;
+}
+
+/* The footer: one centred line of links and the copyright. */
+.mwnf-footer {
+  justify-content: center;
+  text-align: center;
+}
+
+@media only screen and (max-width: 974px) {
+  .mwnf-nav__links { grid-template-columns: repeat(3, 1fr); }
+}
+
+@media only screen and (max-width: 599px) {
+  .mwnf-header__inner { min-height: 65px; }
+  .mwnf-header__lockup { flex-basis: 100%; order: 3; }
+  .mwnf-nav__links { display: none; }
+  .mwnf-nav--open .mwnf-nav__links { display: grid; grid-template-columns: 1fr; }
+  .mwnf-nav__toggle { width: 100%; justify-content: center; font-size: 20px; }
+}
+
+/* The item sheet (views/ItemSheet.vue's `.database-page`, RecordSheetView):
+   legacy's two columns — the photos on the left, the sheet on the right,
+   the related content spanning both — over the shared view's single
+   stacked column. The block classes below (`.mwnf-sheet-*`) are
+   viewer-layout's own; nothing here restates their styling, only where
+   they sit on this gallery's page. */
+.database-page {
+  background: #fff;
+  width: 100%;
+  min-height: 400px;
+}
+.database-page .languages {
+  background: var(--background-color);
+  padding: 6px 20px;
+}
+.database-page .mwnf-record__body {
+  padding: 0 20px 30px;
+}
+.database-page .mwnf-record__main {
+  display: grid;
+  grid-template-columns: 42% minmax(0, 1fr);
+  column-gap: 26px;
+  align-items: start;
+}
+.database-page .mwnf-record__main > * { grid-column: 2; }
+.database-page .mwnf-record__main > .mwnf-media { grid-column: 1; grid-row: 1 / span 12; }
+.database-page .mwnf-record__main > .mwnf-sheet-related { grid-column: 1 / -1; }
+
+@media only screen and (max-width: 849px) {
+  .database-page .mwnf-record__main { display: block; }
+}

@@ -1,0 +1,215 @@
+/*
+ * __SITE_NAME__ — visual identity.
+ *
+ * TODO(webdesigner): this palette is carpets' own (the reference site
+ * this template was built from) — replace it with your gallery's own
+ * colours. This file belongs to the webdesigner.
+ *
+ * Full token documentation with explanations:
+ * node_modules/@museumwnf/viewer-layout/src/tokens.reference.css
+ *
+ * The gallery's chrome is edge-to-edge inside a fixed-width page column, so
+ * the layout tokens deliberately switch off PageShell's centred content
+ * measure: the width and the gutters are set by src/styles/site.css and by
+ * each section's own padding.
+ */
+
+:root {
+  /* ---------- Global ---------- */
+  --mwnf-font-body: 'Roboto Condensed', 'Roboto', Arial, sans-serif;
+  --mwnf-font-heading: 'Roboto Condensed', 'Roboto', Arial, sans-serif;
+  --mwnf-line-height: 1.4;
+  --mwnf-weight-heading: 700;
+  --mwnf-color-text: #1a1a1a;
+  --mwnf-color-background: #fffff0;
+  --mwnf-color-accent: #504819;
+  --mwnf-color-muted: #555555;
+  --mwnf-color-border: #7e743e;
+  --mwnf-content-width: 100%;
+  --mwnf-content-padding: 0rem;
+  --mwnf-space: 0.75rem;
+  --mwnf-radius: 0;
+  --mwnf-section-border: none;
+  --mwnf-section-title-size: 1rem;
+
+  /* ---------- Header ---------- */
+  --mwnf-header-padding: 0;
+  --mwnf-header-background: #504819;
+  --mwnf-header-text: #ffffff;
+  --mwnf-header-title-size: 1.75rem;
+  --mwnf-header-subtitle-size: 0.875rem;
+  --mwnf-header-subtitle-color: #ffffff;
+
+  /* ---------- Banner ---------- */
+  --mwnf-banner-padding: 0;
+  --mwnf-banner-background: #504819;
+  --mwnf-banner-text-color: #ffffff;
+  --mwnf-banner-text-size: 1.25rem;
+  --mwnf-banner-max-height: 28rem;
+
+  /* ---------- Navigation ---------- */
+  --mwnf-nav-padding: 0;
+  --mwnf-nav-background: #504819;
+  --mwnf-nav-border: none;
+  --mwnf-nav-gap: 0px;
+  --mwnf-nav-link-color: #ffffff;
+  --mwnf-nav-link-active-color: #ffffff;
+  --mwnf-nav-link-weight: 400;
+
+  /* ---------- Content ---------- */
+  --mwnf-content-padding-block: 0;
+  --mwnf-content-background: #fffff0;
+
+  /* ---------- Hyperlinks ---------- */
+  --mwnf-hyperlinks-padding: 1rem;
+  --mwnf-hyperlinks-background: transparent;
+  --mwnf-hyperlinks-link-color: #0000ff;
+
+  /* ---------- Sponsors ---------- */
+  --mwnf-sponsors-padding: 1rem;
+  --mwnf-sponsors-background: transparent;
+  --mwnf-sponsors-gap: 1.5rem;
+  --mwnf-sponsors-logo-height: 2.5rem;
+
+  /* ---------- Footer ---------- */
+  --mwnf-footer-padding: 0.5rem;
+  --mwnf-footer-background: #504819;
+  --mwnf-footer-text-color: #ffffff;
+  --mwnf-footer-text-size: 0.875rem;
+  --mwnf-footer-justify: center;
+  --mwnf-footer-gap: 0.5rem;
+  --mwnf-footer-link-color: #ffffff;
+
+  /* ---------- Header: mark, title cell, links, search, switcher ---------- */
+  --mwnf-header-gap: 0.875rem;
+  --mwnf-header-eyebrow-size: 0.875rem;
+  --mwnf-header-title-line-height: 1.05;
+  --mwnf-header-tools-size: 0.875rem;
+  --mwnf-header-link-color: #ffffff;
+  --mwnf-header-links-separator: "|";
+  --mwnf-header-control-border: 2px solid #ffffff;
+  --mwnf-header-control-background: #ffffff;
+  --mwnf-header-control-text: #1a1a1a;
+  --mwnf-header-button-border: 2px solid #7e743e;
+  --mwnf-header-button-background: #7e743e;
+  --mwnf-header-button-text: #ffffff;
+  --mwnf-header-button-active-background: #7e743e;
+  --mwnf-header-button-active-text: #ffffff;
+
+  /* ---------- Banner: the tall home strip and the narrow section strip ---------- */
+  --mwnf-banner-media-background: #504819;
+  --mwnf-banner-fallback: linear-gradient(160deg, #504819, #7e743e);
+  --mwnf-banner-strip-height: 45vh;
+  --mwnf-banner-strip-max-height: 450px;
+  --mwnf-banner-strip-eyebrow-size: 30px;
+  --mwnf-banner-strip-title-size: 70px;
+  --mwnf-banner-overlay-text: #ffffff;
+  --mwnf-banner-overlay-background: rgba(80, 72, 25, 0.6);
+  --mwnf-banner-caption-background: rgba(0, 0, 0, 0.6);
+  --mwnf-banner-caption-text: rgba(255, 255, 255, 0.85);
+  --mwnf-banner-section-height: 20vh;
+  --mwnf-banner-section-max-height: 150px;
+  --mwnf-banner-section-title-size: 190%;
+
+  /* ---------- Content: the record page ---------- */
+  /* The sheet as the legacy gallery set it: bold olive labels over plain
+     values, no cell borders, the photo gallery on the ivory ground. */
+  --mwnf-sheet-text-size: 0.9375rem;
+  --mwnf-sheet-label-size: 0.9375rem;
+  --mwnf-sheet-label-weight: 700;
+  --mwnf-sheet-label-color: #504819;
+  --mwnf-sheet-gap: 0.75rem;
+  --mwnf-sheet-toggle-color: #504819;
+  --mwnf-sheet-term-color: #6b612b;
+  --mwnf-sheet-term-underline: #6b612b;
+  --mwnf-sheet-section-border: 1px solid #91864d;
+  --mwnf-sheet-heading-size: 1rem;
+  --mwnf-sheet-heading-color: #504819;
+  --mwnf-credits-border: 1px solid #91864d;
+  --mwnf-credits-size: 0.875rem;
+  --mwnf-credits-color: #1a1a1a;
+  --mwnf-languages-gap: 0.125rem;
+  --mwnf-languages-button-border: 1px solid #7e743e;
+  --mwnf-languages-button-text: #504819;
+  --mwnf-languages-button-size: 0.8125rem;
+  --mwnf-languages-active-background: #6b612b;
+  --mwnf-languages-active-text: #ffffff;
+  --mwnf-media-background: #fffff0;
+  --mwnf-media-thumb-active-border: 2px solid #6b612b;
+  --mwnf-media-caption-color: #555555;
+  --mwnf-popover-border: 2px solid #6b612b;
+  --mwnf-popover-title-background: #504819;
+  --mwnf-grid-card-background: rgba(80, 72, 25, 0.93);
+
+  /* ---------- Content: the lists ---------- */
+  /* The tile grid, the "filter further by" column, the summary line and the
+     page links as the legacy gallery drew them: white controls with the grey
+     border on the ivory panel, the active page in the dark olive. */
+  --mwnf-grid-columns: 3;
+  --mwnf-grid-gap: 4px;
+  --mwnf-grid-tile-background: #ffffff;
+  --mwnf-grid-card-text: #ffffff;
+  --mwnf-filter-padding: 14px;
+  --mwnf-filter-border: none;
+  --mwnf-filter-background: #fffff0;
+  --mwnf-filter-gap: 10px;
+  --mwnf-filter-title-size: 1rem;
+  --mwnf-filter-title-color: #1a1a1a;
+  --mwnf-filter-control-border: 1px solid #999999;
+  --mwnf-filter-control-background: #ffffff;
+  --mwnf-filter-control-padding: 5px;
+  --mwnf-filter-reset-background: #6b612b;
+  --mwnf-filter-reset-text: #ffffff;
+  --mwnf-summary-size: 0.9375rem;
+  --mwnf-summary-color: #1a1a1a;
+  --mwnf-summary-value-color: #1a1a1a;
+  --mwnf-summary-border: none;
+  --mwnf-summary-padding: 0;
+  --mwnf-pagination-size: 0.8125rem;
+  --mwnf-pagination-button-border: 1px solid #7e743e;
+  --mwnf-pagination-button-background: #ffffff;
+  --mwnf-pagination-button-text: #504819;
+  --mwnf-pagination-button-hover-background: #fffff0;
+  --mwnf-pagination-active-background: #6b612b;
+  --mwnf-pagination-active-text: #ffffff;
+
+  /* ---------- Navigation: the menu button and the standing notice ---------- */
+  --mwnf-nav-toggle-background: #504819;
+  --mwnf-nav-toggle-color: #ffffff;
+  --mwnf-nav-notice-margin: 0;
+  --mwnf-nav-notice-padding: 5px 15px;
+  --mwnf-nav-notice-size: 90%;
+  --mwnf-nav-notice-background: #504819;
+  --mwnf-nav-notice-color: #ffffff;
+
+  /* ---------- Content classes ---------- */
+  /* Only the two the gallery's own pages actually render (the partner
+     profile's "View objects" button, the loading message): legacy's own
+     `.legacy-button`/`.loader` colours, so the shared class reads as the
+     class it replaced rather than the library's neutral default. */
+  --mwnf-button-background: #6b612b;
+  --mwnf-button-text: #ffffff;
+  --mwnf-button-hover-background: #504819;
+  --mwnf-loader-text: #504819;
+
+  /* ---------- Hyperlinks: the shared library default this site's own
+     --link-blue always matched, declared explicitly now that it themes
+     library pages this site does not own the markup of ---------- */
+  --mwnf-link-text: #0000ff;
+
+  /* ---------- Content: PartnerListView ---------- */
+  /* The country-group heading, as the promoted `GalleryPartners`'s own
+     deleted `:deep(.mwnf-partner-list__group-title)` override drew it. */
+  --mwnf-partner-list-group-title-color: #504819;
+  --mwnf-partner-list-group-border: 2px solid #7e743e;
+
+  /* ---------- DXA family pages (@museumwnf/viewer-layout/dxa) ---------- */
+  /* The partner profile's tab strip/heading colour and the ivory bands
+     (language switcher, tab-strip surround, "Timeline for this Search" box)
+     the promoted pages' own deleted `:deep()` overrides drew in
+     `--theme-dark`/`--background-color` — this site's own tokens for them,
+     since `src/dxa.css`'s neutral defaults (`#1c1c1c`/`#f0f0f0`) are a
+     different site's colours. */
+  --mwnf-dxa-heading-color: #504819;
+  --mwnf-dxa-band-background: #fffff0;
+}

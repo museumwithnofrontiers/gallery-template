@@ -1,0 +1,48 @@
+# Daily checks on third-party dependencies, each waiting out a 7-day cooldown
+# so a release has time to be withdrawn before it reaches a site.
+version: 2
+updates:
+  # The @museumwnf platform packages (viewer-core, viewer-layout, viewer-i18n
+  # and the data packages) are IGNORED here, and that is no longer because
+  # Dependabot cannot read them — they publish publicly to npmjs, which it
+  # reads fine.
+  #
+  # They are ignored because this template is never itself a propagate
+  # target: `tools/propagate.mjs` in viewer-workflows opens one PR per
+  # website created from a template, bumping the range each site already
+  # depends on to a version its own CI has verified — but it does not touch
+  # the template itself, which isn't a consumer of itself (the same rule
+  # website-template's own dependabot.yml documents). The versions declared
+  # here are instead updated by hand, deliberately kept close to what the
+  # live sites have already adopted through that release-then-propagate run.
+  # An independent Dependabot bump here would drift ahead of that and could
+  # hand a newly scaffolded site a platform version no live site has run yet.
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: daily
+    cooldown:
+      default-days: 7
+    ignore:
+      - dependency-name: "@museumwnf/*"
+
+  # The reusable workflows in museumwithnofrontiers/viewer-workflows are pinned to an exact
+  # version in .github/workflows/*.yml, never to a moving major tag. Dependabot
+  # covers reusable-workflow refs as well as step-level actions, so a new
+  # viewer-workflows release arrives here as a pull request that runs this
+  # site's own CI before it is adopted — instead of a force-moved `v1`
+  # deploying untested CI to every repo at once. Green minor/patch bumps
+  # auto-merge via automerge.yml; majors wait for a human.
+  #
+  # This ecosystem is unaffected by the problem above: it resolves against the
+  # GitHub API, not against npm.pkg.github.com.
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+    labels:
+      - dependencies
+    groups:
+      github-actions:
+        patterns:
+          - "*"
