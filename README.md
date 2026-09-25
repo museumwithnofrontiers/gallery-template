@@ -42,6 +42,13 @@ admin rights, unlike `website-template`'s tool-driven flow. You do need a
 GitHub account and, from step 3 onward, `gh` installed and logged in
 (`gh auth login`).
 
+An operator with admin rights on the organization can do steps 1 to 3 in one
+go instead, with viewer-workflows' `tools/new-website.mjs`: it creates the
+repository from this template, applies the same settings as the setup script,
+replaces the placeholders — the palette from a `--palette` file — installs the
+dataset package and opens the first pull request (`--class gallery`; see its
+MAINTENANCE.md, "Creating a website"). Both paths end in the same site.
+
 ### 0. Before you start: the dataset package
 
 This template does not create a dataset package — that belongs to
@@ -92,6 +99,9 @@ Three tokens appear across `package.json`, `vite.config.js`, `index.html`,
 - `__SITE_NAMESPACE__` — this website's own texts namespace: one lowercase
   word, no hyphens (`carpets`, `waterInIslam`).
 
+Set the gallery's own colours too, the `__PALETTE_…__` placeholders of
+`src/styles/site.css` — step 7 says where they are.
+
 Then install the dataset package itself, which writes the real version
 range and the lockfile in one step:
 
@@ -100,8 +110,8 @@ npm install @museumwnf/<dataset>-data@latest
 ```
 
 `scripts/check-placeholders.js` (a `preinstall` hook) refuses to let `npm
-install` proceed while any of the three tokens survive, and separately
-catches the placeholder dependency version (`0.0.0-REPLACE-ME`) if step 0
+install` proceed while any of the three tokens or a palette colour survive,
+and separately catches the placeholder dependency version (`0.0.0-REPLACE-ME`) if step 0
 was skipped.
 
 ### 4. The curatorial picks
@@ -142,10 +152,13 @@ your real namespace) as the key prefix.
 
 ### 7. Theme
 
-See "Webdesigner — theming the website" below for the palette
-(`theme/tokens.css`) and, for a gallery specifically, `src/styles/site.css`
-— both currently carry carpets' own olive/khaki example, marked
-`TODO(webdesigner)`.
+Set the gallery's palette: the five colours of `src/styles/site.css` are
+placeholders (`__PALETTE_…__`) until you do, and `npm install` refuses to run
+while one is left. They are legacy's own, in inventory-app's
+`.legacy-code/dxa-client/src/sites/<code>/_variables.scss` (`<code>` is the
+gallery's subdomain in `.legacy-code/dxa-client/environment/config.sh`), plus
+`__PALETTE_THEME_DARK_RGB__`, `-dark` as three numbers. `theme/tokens.css`
+reads them; see "Webdesigner — theming the website" below for the rest.
 
 ### 8. Merge, record and discover
 
@@ -203,9 +216,9 @@ The website's whole visual identity lives in the `theme/` folder:
 `tokens.css` (colors, fonts, spacing — the normal surface), `overrides.css`
 (escape hatch) and `assets/` (logo, banner, sponsor images) — plus, for a
 gallery, `src/styles/site.css` for the views' own content-layer palette and
-page reset. Both `theme/tokens.css` and `src/styles/site.css` currently
-carry carpets' own olive/khaki palette, each marked `TODO(webdesigner)` at
-the top — replace every value with your gallery's own colours.
+page reset. The palette itself is the five colours in `src/styles/site.css`
+(step 7 above); `theme/tokens.css` reads them, so a colour change is made
+there once.
 
 Small changes can be made straight in the browser with the pencil button,
 like the translator flow above — styling changes are reviewed, they do not
