@@ -30,14 +30,6 @@
 
   --shadow-grey:  #707070;
   --link-blue:    #0000ff;
-
-  /* The other MWNF virtual museums' own accents, for Home.vue's sibling-museum
-     tiles — not the source-project chip on the item sheet, which is
-     an `mwnf-chip--<family>` class now, themed by `--mwnf-project-*` (its defaults
-     already carry these same legacy colours, so nothing overrides them here). */
-  --dia-yellow: #ffcc00;  /* Discover Islamic Art (ISL / EPM) */
-  --dba-blue:   #001d66;  /* Discover Baroque Art (DBA / BAR) */
-  --sh-red:     #900000;  /* Sharing History (AWE) */
 }
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }

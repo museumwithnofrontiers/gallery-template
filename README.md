@@ -12,24 +12,16 @@ and a new kind of product from
 [`website-template`](https://github.com/museumwithnofrontiers/website-template),
 the generic scaffold. The three templates stay separate on purpose (decision
 D5 of the platform's [architecture reference](https://github.com/museumwithnofrontiers/inventory-app/issues/1510), which also says
-what goes where across the packages). The pages every gallery shares come
-from the DXA family layer, the `/dxa` entries of `@museumwnf/viewer-core` and
-`@museumwnf/viewer-layout`; a gallery keeps its config, theme, texts and
-tests, and the files milestone M10 has not moved into `/dxa` yet
-([inventory-app#2017](https://github.com/museumwithnofrontiers/inventory-app/issues/2017)).
+what goes where across the packages). The pages, page shell, menu and legacy
+redirects every gallery shares come from the DXA family layer, the `/dxa`
+entries of `@museumwnf/viewer-core` and `@museumwnf/viewer-layout`; a gallery
+keeps its own values, theme, texts and tests.
 
-> **Before you create a gallery from this template:** package CI,
-> propagation and the organization site's list find websites through the
-> `website-template` link only. A repository created from this template is
-> not found by any of them until
-> [inventory-app#2018](https://github.com/museumwithnofrontiers/inventory-app/issues/2018)
-> makes the tooling recognise all three templates.
-
-This template ships as a real, working gallery — carpets' own code, as it
-stood on 2026-09-23 — with the dataset-specific parts turned into
-placeholders and `TODO(dataset):` markers. A new gallery starts from
-something that already works end to end, and needs its own data swapped in
-rather than built up from nothing.
+This template ships as a real, working gallery — carpets' own, as it stood on
+2026-09-25 — with the dataset-specific parts turned into placeholders and
+`TODO(dataset):` markers. A new gallery starts from something that already
+works end to end, and needs its own data swapped in rather than built up from
+nothing.
 
 A gallery is a light, static Vue 3 front-end for one published dataset. It
 combines these `@museumwnf` packages from npmjs:
@@ -132,18 +124,13 @@ kind of pass — see the `TODO(dataset):` comment above each.
 
 **Proof:** `npm run test` and `npm run build` both pass.
 
-### 5. Declare the catalogue and the sheet
+### 5. The credits text
 
-The results and record pages read `catalogue`/`sheet` from
-`src/composables/gallery.js`: `catalogue` says what the results page
-filters on (which facets, what the URL carries for them, the date rule, the
-page size) and how a row looks; `sheet` says which fields a record shows, in
-what order, under which `sheet.field.*` labels. Adjust both to your
-dataset — a facet is one line in `facets` and one in `controls`, a field is
-one line — and the cards and the record on display come from `home` in
-`src/dataset.config.js`. Replace `__SITE_NAMESPACE__.credits.body` in
-`locales/en.json` with your own credits text once the texts PR (below)
-extracts it — until then it carries a placeholder marker, which is expected.
+The pages themselves — what the results page filters on, which fields an
+item sheet shows — are the family's, the same on every gallery, and need
+nothing here. Replace `__SITE_NAMESPACE__.credits.body` in `locales/en.json`
+with your own credits text once the texts PR (below) extracts it — until
+then it carries a placeholder marker, which is expected.
 
 ### 6. Texts
 
@@ -242,9 +229,9 @@ merge automatically. For real design work, use the live preview:
    **http://localhost:5173** in your browser.
 3. **Edit `theme/`, watch it live.** Every save refreshes the browser
    automatically. `tokens.css` lists every knob with a comment; put images
-   into `theme/assets/` and reference them from `src/dataset.config.js`
-   (banner, sponsor logos). Anything a token cannot express goes into
-   `overrides.css`. A change to a layout component itself is a request for
+   into `theme/assets/` and reference them from the theme's own CSS (the
+   banner comes from the dataset). Anything a token cannot express goes
+   into `overrides.css`. A change to a layout component itself is a request for
    the `viewer-layout` package — open an issue there and a developer pairs
    on it.
 4. **Propose your changes:** in GitHub Desktop, write a short summary
@@ -263,34 +250,38 @@ real. The pass that imposed them is metanull/inventory-app#1683, and this
 template — a real, working gallery — already obeys all eleven.
 
 **1. `src/dataset.config.js` is the whole declaration.** Routes, languages,
-shell, media host, outbound links. Before the application mounts, the
-website reads nothing from its package but `manifest.json`. `src/main.js`
-needs no edit after the placeholders are replaced.
+shell, media host, outbound links: `galleryConfig` builds them from this
+gallery's own values. Before the application mounts, the website reads
+nothing from its package but `manifest.json`. `src/main.js` needs no edit
+after the placeholders are replaced.
 
 ### A gallery website
 
-`@museumwnf/viewer-layout/dxa` exports every platform page already
-composed, and `standardRoutes('gallery', config)` returns them as route
-entries this website spreads into `extraViews`: the About page, the Credits
-page, the search how-to page, the partners list, a partner's profile, the
-search results page, the timeline results page, the timeline gallery, the
-collection results page, the collection search form and a partner's objects
-page. Only Credits needs a per-site string, passed as `config.creditsBody`.
+`galleryConfig(values)` from `@museumwnf/viewer-layout/dxa` returns the whole
+configuration of a gallery: the shell, the menu, the banner, the outbound
+links, the legacy redirects and every page, through
+`standardRoutes('gallery', { pages: true })` — home, the item page, the
+timeline entrance, and the platform pages (About, Credits, the search how-to,
+the partners list, a partner's profile and objects, the search, timeline and
+collection results, the timeline gallery, the collection search form). What
+it takes is what differs between galleries: the dataset package, the name,
+the address, the project chips, the notice projects and the credits entry.
 
-Every route name and path the factory registers is pinned inside
+Every route name and path the family registers is pinned inside
 viewer-layout to what every live DXA site already uses — never redeclare
 one of them here, or a second declaration of the same address will drift
-from the first. This website's own routes stay in `src/dataset.config.js`:
-home, item, and the timeline entrance — pages that read this dataset's own
-shape rather than the shape the factory already covers.
+from the first. A page that has to differ from the family's is this
+gallery's own component, registered on the same route name as an override of
+what `galleryConfig` returns; a page every gallery needs changed is a change
+to `@museumwnf/viewer-layout/dxa`.
 
 Full page, prop and slot detail: viewer-layout's README,
 ["DXA family pages"](https://github.com/museumwithnofrontiers/viewer-layout#dxa-family-pages).
 
 **2. Records and translations come from viewer-core, lazily.** `entityRef`,
-`byId`, `loadTranslations`, `translations`, `tr` — see
-`src/composables/gallery.js`, which is derivation over those and holds no
-state of its own. Nothing in `src/` imports `@inventory-data` directly, and
+`byId`, `loadTranslations`, `translations`, `tr` — the family's data layer
+(`@museumwnf/viewer-core/dxa`) is derivation over those and holds no state
+of its own. Nothing in `src/` imports `@inventory-data` directly, and
 nothing keeps a second cache. In particular, never resolve a language with
 an interpolated dynamic import: `` import(`@inventory-data/translations/items.${lang}.json`) ``
 cannot be resolved statically, so a bundler pulls in every language of that
@@ -316,13 +307,13 @@ language otherwise. The visitor may toggle it there, and that toggle never
 touches the site language or the address.
 
 **6. Every field is Markdown, escaped in one place.** `md`, `mdInline` and
-`mdStrip` in the composable are viewer-core's renderers and the only place a
+`mdStrip` are viewer-core's renderers and the only place a
 record becomes HTML. A tag that slipped past the importer appears on the
 page as the characters it is; when that happens the fix belongs in the
 importer, not in a view.
 
 **7. The shell is `@museumwnf/viewer-layout`'s `SiteShell`, from config.**
-`src/SiteShell.vue` only mounts it and fills the `#brand` slot with the
+The family's `GalleryShell` mounts it and fills the `#brand` slot with the
 header lockup; the menu, the language switcher and the link lists are built
 by `SiteShell` itself from `config.navigation` (see the package's README,
 "Site shell"). A shape it cannot express is a request to
