@@ -5,16 +5,34 @@ Template repository for MWNF **gallery** websites. Every new gallery repo
 template — it is never installed as a dependency and never updated in
 existing websites.
 
-Unlike [`website-template`](https://github.com/museumwithnofrontiers/website-template)
-(a bare, generic scaffold for any of the three website classes), this
-template ships as a real, working gallery — carpets' own code, as it stood
-on 2026-09-23 — with the dataset-specific parts turned into placeholders and
-`TODO(dataset):` markers. A new gallery starts from something that already
-works end to end, and needs its own data swapped in rather than built up
-from nothing.
+**Its role.** This template is the starting point for a new gallery, one of
+the DXA family. A new exhibition starts from
+[`exhibition-template`](https://github.com/museumwithnofrontiers/exhibition-template),
+and a new kind of product from
+[`website-template`](https://github.com/museumwithnofrontiers/website-template),
+the generic scaffold. The three templates stay separate on purpose (decision
+D5 of the platform's [architecture reference](https://github.com/museumwithnofrontiers/inventory-app/issues/1510), which also says
+what goes where across the packages). The pages every gallery shares come
+from the DXA family layer, the `/dxa` entries of `@museumwnf/viewer-core` and
+`@museumwnf/viewer-layout`; a gallery keeps its config, theme, texts and
+tests, and the files milestone M10 has not moved into `/dxa` yet
+([inventory-app#2017](https://github.com/museumwithnofrontiers/inventory-app/issues/2017)).
+
+> **Before you create a gallery from this template:** package CI,
+> propagation and the organization site's list find websites through the
+> `website-template` link only. A repository created from this template is
+> not found by any of them until
+> [inventory-app#2018](https://github.com/museumwithnofrontiers/inventory-app/issues/2018)
+> makes the tooling recognise all three templates.
+
+This template ships as a real, working gallery — carpets' own code, as it
+stood on 2026-09-23 — with the dataset-specific parts turned into
+placeholders and `TODO(dataset):` markers. A new gallery starts from
+something that already works end to end, and needs its own data swapped in
+rather than built up from nothing.
 
 A gallery is a light, static Vue 3 front-end for one published dataset. It
-combines three `@museumwnf` packages from npmjs:
+combines these `@museumwnf` packages from npmjs:
 
 | Package | Role |
 | --- | --- |
