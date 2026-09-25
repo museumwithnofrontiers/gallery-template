@@ -13,20 +13,22 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto+Condensed:ital,wght@0,300;0,400;0,700;1,400&family=Roboto:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap');
 
 /* ── Palette ────────────────────────────────────────────────────────────────
-   TODO(webdesigner): this is carpets' own palette (the reference site this
-   template was built from), carried over unchanged so the template stays a
-   real, working gallery. Replace every value below with your own gallery's
-   colours — see "Webdesigner — theming the website" in README.md.
+   This gallery's own colours: legacy's five, from inventory-app's
+   .legacy-code/dxa-client/src/sites/<code>/_variables.scss (the gallery's
+   <code> is its subdomain in .legacy-code/dxa-client/environment/config.sh).
+   They are placeholders until set, and `npm install` refuses to run while
+   one is left (scripts/check-placeholders.js): a new gallery never ships
+   another gallery's colours. theme/tokens.css reads them from here.
    --theme-dark-rgb is the same colour as --theme-dark in a form the
-   translucent overlays can take an alpha on, so a palette change never has
-   to be chased into a component. */
+   translucent overlays can take an alpha on (#504819 is 80, 72, 25), so a
+   palette change never has to be chased into a component. */
 :root {
-  --theme-dark:        #504819;  /* banner, header, footer */
-  --theme-dark-rgb:    80, 72, 25;
-  --theme-medium-dark: #6b612b;  /* dark menu items */
-  --theme-medium:      #7e743e;  /* text background, search button */
-  --theme-light:       #91864d;  /* light menu items */
-  --background-color:  #fffff0;  /* page background */
+  --theme-dark:        __PALETTE_THEME_DARK__;         /* $theme-dark: banner, header, footer */
+  --theme-dark-rgb:    __PALETTE_THEME_DARK_RGB__;     /* $theme-dark as three numbers */
+  --theme-medium-dark: __PALETTE_THEME_MEDIUM_DARK__;  /* $theme-medium-dark: dark menu items */
+  --theme-medium:      __PALETTE_THEME_MEDIUM__;       /* $theme-medium: text background, search button */
+  --theme-light:       __PALETTE_THEME_LIGHT__;        /* $theme-light: light menu items */
+  --background-color:  __PALETTE_BACKGROUND_COLOR__;   /* $background-color: page background */
 
   --shadow-grey:  #707070;
   --link-blue:    #0000ff;
