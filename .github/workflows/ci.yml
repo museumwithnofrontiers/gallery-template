@@ -12,11 +12,11 @@ jobs:
     # the preinstall check additionally fails the install if a placeholder was
     # left behind in a file npm does not read.
     if: ${{ !endsWith(github.repository, '/gallery-template') }}
-    uses: museumwithnofrontiers/viewer-workflows/.github/workflows/website-ci.yml@v1.7.1
+    uses: museumwithnofrontiers/viewer-workflows/.github/workflows/website-ci.yml@v1.9.0
   locales:
     # Guarded like the rest since the texts gained placeholders of their own:
     # __SITE_NAMESPACE__ is not a name, so the template's own locales/en.json
     # cannot pass the check a real website has to pass. scripts/check-placeholders.js
     # is what refuses a copy that still carries it.
     if: ${{ !endsWith(github.repository, '/gallery-template') }}
-    uses: museumwithnofrontiers/viewer-workflows/.github/workflows/locale-validate.yml@v1.7.1
+    uses: museumwithnofrontiers/viewer-workflows/.github/workflows/locale-validate.yml@v1.9.0

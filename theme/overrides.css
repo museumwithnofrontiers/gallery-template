@@ -99,35 +99,3 @@
   .mwnf-nav--open .mwnf-nav__links { display: grid; grid-template-columns: 1fr; }
   .mwnf-nav__toggle { width: 100%; justify-content: center; font-size: 20px; }
 }
-
-/* The item sheet (views/ItemSheet.vue's `.database-page`, RecordSheetView):
-   legacy's two columns — the photos on the left, the sheet on the right,
-   the related content spanning both — over the shared view's single
-   stacked column. The block classes below (`.mwnf-sheet-*`) are
-   viewer-layout's own; nothing here restates their styling, only where
-   they sit on this gallery's page. */
-.database-page {
-  background: #fff;
-  width: 100%;
-  min-height: 400px;
-}
-.database-page .languages {
-  background: var(--background-color);
-  padding: 6px 20px;
-}
-.database-page .mwnf-record__body {
-  padding: 0 20px 30px;
-}
-.database-page .mwnf-record__main {
-  display: grid;
-  grid-template-columns: 42% minmax(0, 1fr);
-  column-gap: 26px;
-  align-items: start;
-}
-.database-page .mwnf-record__main > * { grid-column: 2; }
-.database-page .mwnf-record__main > .mwnf-media { grid-column: 1; grid-row: 1 / span 12; }
-.database-page .mwnf-record__main > .mwnf-sheet-related { grid-column: 1 / -1; }
-
-@media only screen and (max-width: 849px) {
-  .database-page .mwnf-record__main { display: block; }
-}

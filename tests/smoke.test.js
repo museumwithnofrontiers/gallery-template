@@ -163,13 +163,13 @@ describe('website smoke test', () => {
     const { app, host } = await mountSite(`#/item/${items[0].id}`)
     await vi.waitFor(() => expect(host.querySelector('.mwnf-sheet__label')).not.toBeNull(), { timeout: 20000 })
     expect(host.querySelector('.mwnf-record')).not.toBeNull()
-    expect(host.querySelector('.languages')).not.toBeNull()
+    expect(host.querySelector('.mwnf-dxa-item__languages')).not.toBeNull()
     expect(host.querySelector('.mwnf-sheet-related')).not.toBeNull()
     // inventory-app#1727 phase 4: the chip and the "Source database" line
     // both read the item's project name from `manifest.projects`
     // (`useProjects().label()`), not a legacy project-code badge —
     // inventory-app#1728: `.mwnf-sheet-source` is `RecordSheetView`'s own
-    // block, built from composables/gallery.js's `itemSheet.sourceDatabase`
+    // block, built from the family data layer's `itemSheet.sourceDatabase`
     // spec key. Whatever items[0]'s own project is, its manifest name must
     // appear — no per-site pick needed here.
     const itemsProjectName = manifest.projects[items[0].project_id]?.name?.en ?? ''
@@ -221,7 +221,7 @@ describe('website smoke test', () => {
   // URL map (scripts/importer/src/utils/project-urls.ts, #1753) fills
   // `manifest.projects[*].related_database_url` / `artistic_introduction_url`
   // at import time, and `RecordSheetView`'s `related.databaseLabel`/
-  // `.artisticIntroductionLabel` (composables/gallery.js's `itemSheet` spec,
+  // `.artisticIntroductionLabel` (the family data layer's `itemSheet` spec,
   // inventory-app#1728) render a block iff that project's URL is non-null.
   //
   // Reuses CHIP_ITEM_ID (see the curatorial-picks block above) — pick it to
@@ -268,7 +268,7 @@ describe('website smoke test', () => {
   // `RecordView`'s default `source` slot renders the credit as soon as the
   // website declares `site.origin` (dataset.config.js),
   // independently of the sheet spec's own `citation.permalink: false`
-  // (composables/gallery.js) — that flag only drops the address from the "cite
+  // (the family data layer) — that flag only drops the address from the "cite
   // this page" sentence, which legacy's DXA sheets never printed either.
   it('renders the source credit on the item sheet, addressed to this deployed site', async () => {
     const [items] = await loadEntities(['items'])
@@ -305,7 +305,7 @@ describe('website smoke test', () => {
 
   // The timeline entrance/results and the gallery run on the platform's
   // composed views: the country and period controls, the events list and the
-  // "See gallery" cross-link come from the spec in composables/gallery.js.
+  // "See gallery" cross-link come from the spec in the family data layer.
   //
   // The exact row/tile counts and event text are the platform's own join
   // logic (source families, roundOutward, countryIdForCode) — not worth
@@ -319,7 +319,7 @@ describe('website smoke test', () => {
     await vi.waitFor(() => expect(host.querySelectorAll('.mwnf-timeline__row').length).toBeGreaterThan(0), { timeout: 20000 })
     expect(host.querySelector('.mwnf-summary').textContent.length).toBeGreaterThan(0)
     await vi.waitFor(() => expect(host.querySelector('.mwnf-timeline__row')).not.toBeNull(), { timeout: 20000 })
-    expect(host.querySelector('.mwnf-timeline__gallery') !== null || true).toBe(true)
+    await vi.waitFor(() => expect(host.querySelector('.mwnf-timeline__gallery')).not.toBeNull(), { timeout: 20000 })
     app.unmount()
   }, 60000)
 
@@ -358,7 +358,7 @@ describe('website smoke test', () => {
   // The partner pages run on the platform's composed views
   // (metanull/viewer-layout#38, #41): the grouping, the A-Z toggle, the
   // record's language, the map and the member-items grid come from the specs
-  // in composables/gallery.js. What only this gallery has — the "no objects"
+  // in the family data layer. What only this gallery has — the "no objects"
   // line for a partner listed under decision MWNF-384 — fills the list's
   // `#row` slot.
   // TODO(dataset): all three of the following need PARTNER_ID/_NAME/_CITY/
