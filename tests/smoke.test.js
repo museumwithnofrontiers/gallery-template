@@ -168,7 +168,7 @@ describe('website smoke test', () => {
     // inventory-app#1727 phase 4: the chip and the "Source database" line
     // both read the item's project name from `manifest.projects`
     // (`useProjects().label()`), not a legacy project-code badge —
-    // inventory-app#1728: `.mwnf-sheet-source` is `RecordSheetView`'s own
+    // inventory-app#1728: `.mwnf-sheet-source` is `ItemDetailView`'s own
     // block, built from the family data layer's `itemSheet.sourceDatabase`
     // spec key. Whatever items[0]'s own project is, its manifest name must
     // appear — no per-site pick needed here.
@@ -184,7 +184,7 @@ describe('website smoke test', () => {
   it('colours and names the source-database chip from the manifest projects section', async () => {
     const { app, host } = await mountSite(`#/item/${CHIP_ITEM_ID}`)
     await vi.waitFor(() => expect(host.querySelector('.mwnf-sheet-source .mwnf-chip')).not.toBeNull(), { timeout: 20000 })
-    // inventory-app#1728: `RecordSheetView`'s own `.mwnf-sheet-source__line`
+    // inventory-app#1728: `ItemDetailView`'s own `.mwnf-sheet-source__line`
     // renders the chip as a decorative, `aria-hidden` colour dot beside the
     // text — the project name is the line's own text now, not the chip
     // span's, unlike the local markup this replaces.
@@ -197,7 +197,7 @@ describe('website smoke test', () => {
   // inventory-app#1727 phase 4: the "added within Explore Islamic Art
   // Collections" notice is driven by `dataset.config.js`'s `noticeProjects`
   // list of project ids — it must show for that project's own records and
-  // stay off everyone else's. inventory-app#1728: `RecordSheetView`'s own
+  // stay off everyone else's. inventory-app#1728: `ItemDetailView`'s own
   // `.mwnf-sheet-source`/`.mwnf-sheet-notice`.
   //
   // TODO(dataset): needs EPM_ITEM_ID (see the curatorial-picks block above).
@@ -220,7 +220,7 @@ describe('website smoke test', () => {
   // artistic-introduction blocks are purely manifest-driven — the importer's
   // URL map (scripts/importer/src/utils/project-urls.ts, #1753) fills
   // `manifest.projects[*].related_database_url` / `artistic_introduction_url`
-  // at import time, and `RecordSheetView`'s `related.databaseLabel`/
+  // at import time, and `ItemDetailView`'s `related.databaseLabel`/
   // `.artisticIntroductionLabel` (the family data layer's `itemSheet` spec,
   // inventory-app#1728) render a block iff that project's URL is non-null.
   //
