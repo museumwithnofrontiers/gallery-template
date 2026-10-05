@@ -100,7 +100,7 @@ Three tokens appear across `package.json`, `vite.config.js`, `index.html`,
   word, no hyphens (`carpets`, `waterInIslam`).
 
 Set the gallery's own colours too, the `__PALETTE_…__` placeholders of
-`src/styles/site.css` — step 7 says where they are.
+`theme/tokens.css` — step 7 says where they are.
 
 Then install the dataset package itself, which writes the real version
 range and the lockfile in one step:
@@ -116,18 +116,19 @@ was skipped.
 
 ### 4. The curatorial picks
 
-`tests/smoke.test.js` carries a block near the top headed
-`// ── TODO(dataset): curatorial picks ─────`. These five values name
-specific records in carpets' own dataset and cannot be derived
-generically — replace each by inspecting your own published package (fetch
+`tests/smoke.test.js` runs the gallery family's smoke test
+(`describeGallerySmoke`, from `@museumwnf/viewer-layout/dxa/testing`) with
+the records of your own dataset it looks for: the block headed
+`// ── TODO(dataset): curatorial picks ─────`. Replace each by inspecting
+your own published package (fetch
 `https://unpkg.com/@museumwnf/<dataset>-data@latest/items.json`,
 `partners.json`, `dynasties.json`, `timeline_events.json`, and their
 `translations/*.en.json`, or `npm pack --dry-run` it locally). The comment
-beside each constant, and the test that uses it, names the exact selection
-rule. A pick that plainly does not exist in your dataset (no item borrowed
-from Explore Islamic Art Collections, no dynasty with a translated history
-block) means deleting the one or two tests that need it, as each affected
-test says.
+beside each pick names the exact selection rule. A pick that plainly does
+not exist in your dataset (no item borrowed from Explore Islamic Art
+Collections, no dynasty with a translated history) is left `null`, and the
+suite skips the test that needs it. Tests of this gallery's own go after the
+call.
 
 `src/dataset.config.js`'s `projectColors`/`noticeProjects` need the same
 kind of pass — see the `TODO(dataset):` comment above each.
@@ -152,13 +153,13 @@ your real namespace) as the key prefix.
 
 ### 7. Theme
 
-Set the gallery's palette: the five colours of `src/styles/site.css` are
+Set the gallery's palette: the five colours of `theme/tokens.css` are
 placeholders (`__PALETTE_…__`) until you do, and `npm install` refuses to run
 while one is left. They are legacy's own, in inventory-app's
 `.legacy-code/dxa-client/src/sites/<code>/_variables.scss` (`<code>` is the
-gallery's subdomain in `.legacy-code/dxa-client/environment/config.sh`), plus
-`__PALETTE_THEME_DARK_RGB__`, `-dark` as three numbers. `theme/tokens.css`
-reads them; see "Webdesigner — theming the website" below for the rest.
+gallery's subdomain in `.legacy-code/dxa-client/environment/config.sh`). The
+gallery family's theme reads them; see "Webdesigner — theming the website"
+below for the rest.
 
 ### 8. Merge, record and discover
 
@@ -213,12 +214,12 @@ inside it.
 ## Webdesigner — theming the website
 
 The website's whole visual identity lives in the `theme/` folder:
-`tokens.css` (colors, fonts, spacing — the normal surface), `overrides.css`
-(escape hatch) and `assets/` (logo, banner, sponsor images) — plus, for a
-gallery, `src/styles/site.css` for the views' own content-layer palette and
-page reset. The palette itself is the five colours in `src/styles/site.css`
-(step 7 above); `theme/tokens.css` reads them, so a colour change is made
-there once.
+`tokens.css` (the palette, and any token that differs from the family's
+theme), `overrides.css` (escape hatch) and `assets/` (logo, banner, sponsor
+images). The palette is the five colours at the top of `tokens.css` (step 7
+above): the gallery family's theme, `@museumwnf/viewer-layout/dxa/gallery.css`,
+reads them for every surface, text and border, so a colour change is made
+there once. Any token of that theme set again in `tokens.css` wins over it.
 
 Small changes can be made straight in the browser with the pencil button,
 like the translator flow above — styling changes are reviewed, they do not
@@ -241,7 +242,9 @@ merge automatically. For real design work, use the live preview:
    a line shows `Local: http://localhost:5173/`, then open
    **http://localhost:5173** in your browser.
 3. **Edit `theme/`, watch it live.** Every save refreshes the browser
-   automatically. `tokens.css` lists every knob with a comment; put images
+   automatically. Change the palette in `tokens.css`, or set any token of
+   the family's theme there again — every one, and what it does, is listed
+   in `node_modules/@museumwnf/viewer-layout/src/tokens.reference.css`; put images
    into `theme/assets/` and reference them from the theme's own CSS (the
    banner comes from the dataset). Anything a token cannot express goes
    into `overrides.css`. A change to a layout component itself is a request for
@@ -339,8 +342,9 @@ reads. Addresses the site used to publish go in `legacyRoutes`,
 redirect-only. The catch-all is viewer-core's; do not declare a second one.
 
 **9. A website owns its theme, and nothing else.** `theme/tokens.css` for
-the chrome, `src/styles/site.css` for the views' own content styles. Layout
-belongs to `viewer-layout`, behaviour to `viewer-core`.
+its palette and what differs from the family's theme. The family's own
+stylesheet and smoke test, the layout and the pages belong to
+`viewer-layout`, behaviour to `viewer-core`.
 
 **10. CI is thin and pinned.** The workflows below call
 `museumwithnofrontiers/viewer-workflows` at an exact version.

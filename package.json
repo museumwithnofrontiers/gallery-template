@@ -18,7 +18,7 @@
     "@museumwnf/__DATASET__-data": "0.0.0-REPLACE-ME",
     "@museumwnf/viewer-core": "^2.5.1",
     "@museumwnf/viewer-i18n": "^6.0.0",
-    "@museumwnf/viewer-layout": "^3.2.1",
+    "@museumwnf/viewer-layout": "^3.3.0",
     "vue": "^3.5.0",
     "vue-router": "^5.0.0"
   },
