@@ -1,216 +1,25 @@
 /*
  * __SITE_NAME__ — visual identity.
  *
- * The colours read the gallery's palette, src/styles/site.css (legacy's five,
- * an input `npm install` will not run without), through `var(--theme-*)`;
- * what is not the palette — the text, the white controls, the greys — is
- * written here. This file belongs to the webdesigner.
+ * The palette is legacy's five colours, from inventory-app's
+ * .legacy-code/dxa-client/src/sites/<code>/_variables.scss (the gallery's
+ * <code> is its subdomain in .legacy-code/dxa-client/environment/config.sh).
+ * The gallery family's theme (@museumwnf/viewer-layout/dxa/gallery.css) reads
+ * them for every surface, text and border of the site. A token of that theme
+ * set again below wins over it; every token there is, and what it does, is in
+ * node_modules/@museumwnf/viewer-layout/src/tokens.reference.css.
  *
- * Full token documentation with explanations:
- * node_modules/@museumwnf/viewer-layout/src/tokens.reference.css
+ * The colours are placeholders until set, and `npm install` refuses to run
+ * while one is left (scripts/check-placeholders.js): a new gallery never
+ * ships another gallery's colours.
  *
- * The gallery's chrome is edge-to-edge inside a fixed-width page column, so
- * the layout tokens deliberately switch off PageShell's centred content
- * measure: the width and the gutters are set by src/styles/site.css and by
- * each section's own padding.
+ * This file belongs to the webdesigner.
  */
 
 :root {
-  /* ---------- Global ---------- */
-  --mwnf-font-body: 'Roboto Condensed', 'Roboto', Arial, sans-serif;
-  --mwnf-font-heading: 'Roboto Condensed', 'Roboto', Arial, sans-serif;
-  --mwnf-line-height: 1.4;
-  --mwnf-weight-heading: 700;
-  --mwnf-color-text: #1a1a1a;
-  --mwnf-color-background: var(--background-color);
-  --mwnf-color-accent: var(--theme-dark);
-  --mwnf-color-muted: #555555;
-  --mwnf-color-border: var(--theme-medium);
-  --mwnf-content-width: 100%;
-  --mwnf-content-padding: 0rem;
-  --mwnf-space: 0.75rem;
-  --mwnf-radius: 0;
-  --mwnf-section-border: none;
-  --mwnf-section-title-size: 1rem;
-
-  /* ---------- Header ---------- */
-  --mwnf-header-padding: 0;
-  --mwnf-header-background: var(--theme-dark);
-  --mwnf-header-text: #ffffff;
-  --mwnf-header-title-size: 1.75rem;
-  --mwnf-header-subtitle-size: 0.875rem;
-  --mwnf-header-subtitle-color: #ffffff;
-
-  /* ---------- Banner ---------- */
-  --mwnf-banner-padding: 0;
-  --mwnf-banner-background: var(--theme-dark);
-  --mwnf-banner-text-color: #ffffff;
-  --mwnf-banner-text-size: 1.25rem;
-  --mwnf-banner-max-height: 28rem;
-
-  /* ---------- Navigation ---------- */
-  --mwnf-nav-padding: 0;
-  --mwnf-nav-background: var(--theme-dark);
-  --mwnf-nav-border: none;
-  --mwnf-nav-gap: 0px;
-  --mwnf-nav-link-color: #ffffff;
-  --mwnf-nav-link-active-color: #ffffff;
-  --mwnf-nav-link-weight: 400;
-
-  /* ---------- Content ---------- */
-  --mwnf-content-padding-block: 0;
-  --mwnf-content-background: var(--background-color);
-
-  /* ---------- Hyperlinks ---------- */
-  --mwnf-hyperlinks-padding: 1rem;
-  --mwnf-hyperlinks-background: transparent;
-  --mwnf-hyperlinks-link-color: #0000ff;
-
-  /* ---------- Sponsors ---------- */
-  --mwnf-sponsors-padding: 1rem;
-  --mwnf-sponsors-background: transparent;
-  --mwnf-sponsors-gap: 1.5rem;
-  --mwnf-sponsors-logo-height: 2.5rem;
-
-  /* ---------- Footer ---------- */
-  --mwnf-footer-padding: 0.5rem;
-  --mwnf-footer-background: var(--theme-dark);
-  --mwnf-footer-text-color: #ffffff;
-  --mwnf-footer-text-size: 0.875rem;
-  --mwnf-footer-justify: center;
-  --mwnf-footer-gap: 0.5rem;
-  --mwnf-footer-link-color: #ffffff;
-
-  /* ---------- Header: mark, title cell, links, search, switcher ---------- */
-  --mwnf-header-gap: 0.875rem;
-  --mwnf-header-eyebrow-size: 0.875rem;
-  --mwnf-header-title-line-height: 1.05;
-  --mwnf-header-tools-size: 0.875rem;
-  --mwnf-header-link-color: #ffffff;
-  --mwnf-header-links-separator: "|";
-  --mwnf-header-control-border: 2px solid #ffffff;
-  --mwnf-header-control-background: #ffffff;
-  --mwnf-header-control-text: #1a1a1a;
-  --mwnf-header-button-border: 2px solid var(--theme-medium);
-  --mwnf-header-button-background: var(--theme-medium);
-  --mwnf-header-button-text: #ffffff;
-  --mwnf-header-button-active-background: var(--theme-medium);
-  --mwnf-header-button-active-text: #ffffff;
-
-  /* ---------- Banner: the tall home strip and the narrow section strip ---------- */
-  --mwnf-banner-media-background: var(--theme-dark);
-  --mwnf-banner-fallback: linear-gradient(160deg, var(--theme-dark), var(--theme-medium));
-  --mwnf-banner-strip-height: 45vh;
-  --mwnf-banner-strip-max-height: 450px;
-  --mwnf-banner-strip-eyebrow-size: 30px;
-  --mwnf-banner-strip-title-size: 70px;
-  --mwnf-banner-overlay-text: #ffffff;
-  --mwnf-banner-overlay-background: rgba(80, 72, 25, 0.6);
-  --mwnf-banner-caption-background: rgba(0, 0, 0, 0.6);
-  --mwnf-banner-caption-text: rgba(255, 255, 255, 0.85);
-  --mwnf-banner-section-height: 20vh;
-  --mwnf-banner-section-max-height: 150px;
-  --mwnf-banner-section-title-size: 190%;
-
-  /* ---------- Content: the record page ---------- */
-  /* The sheet as the legacy gallery set it: bold labels in the dark tone over
-     plain values, no cell borders, the photo gallery on the page ground. */
-  --mwnf-sheet-text-size: 0.9375rem;
-  --mwnf-sheet-label-size: 0.9375rem;
-  --mwnf-sheet-label-weight: 700;
-  --mwnf-sheet-label-color: var(--theme-dark);
-  --mwnf-sheet-gap: 0.75rem;
-  --mwnf-sheet-toggle-color: var(--theme-dark);
-  --mwnf-sheet-term-color: var(--theme-medium-dark);
-  --mwnf-sheet-term-underline: var(--theme-medium-dark);
-  --mwnf-sheet-section-border: 1px solid var(--theme-light);
-  --mwnf-sheet-heading-size: 1rem;
-  --mwnf-sheet-heading-color: var(--theme-dark);
-  --mwnf-credits-border: 1px solid var(--theme-light);
-  --mwnf-credits-size: 0.875rem;
-  --mwnf-credits-color: #1a1a1a;
-  --mwnf-languages-gap: 0.125rem;
-  --mwnf-languages-button-border: 1px solid var(--theme-medium);
-  --mwnf-languages-button-text: var(--theme-dark);
-  --mwnf-languages-button-size: 0.8125rem;
-  --mwnf-languages-active-background: var(--theme-medium-dark);
-  --mwnf-languages-active-text: #ffffff;
-  --mwnf-media-background: var(--background-color);
-  --mwnf-media-thumb-active-border: 2px solid var(--theme-medium-dark);
-  --mwnf-media-caption-color: #555555;
-  --mwnf-popover-border: 2px solid var(--theme-medium-dark);
-  --mwnf-popover-title-background: var(--theme-dark);
-  --mwnf-grid-card-background: rgba(80, 72, 25, 0.93);
-
-  /* ---------- Content: the lists ---------- */
-  /* The tile grid, the "filter further by" column, the summary line and the
-     page links as the legacy gallery drew them: white controls with the grey
-     border on the page-ground panel, the active page in the dark tone. */
-  --mwnf-grid-columns: 3;
-  --mwnf-grid-gap: 4px;
-  --mwnf-grid-tile-background: #ffffff;
-  --mwnf-grid-card-text: #ffffff;
-  --mwnf-filter-padding: 14px;
-  --mwnf-filter-border: none;
-  --mwnf-filter-background: var(--background-color);
-  --mwnf-filter-gap: 10px;
-  --mwnf-filter-title-size: 1rem;
-  --mwnf-filter-title-color: #1a1a1a;
-  --mwnf-filter-control-border: 1px solid #999999;
-  --mwnf-filter-control-background: #ffffff;
-  --mwnf-filter-control-padding: 5px;
-  --mwnf-filter-reset-background: var(--theme-medium-dark);
-  --mwnf-filter-reset-text: #ffffff;
-  --mwnf-summary-size: 0.9375rem;
-  --mwnf-summary-color: #1a1a1a;
-  --mwnf-summary-value-color: #1a1a1a;
-  --mwnf-summary-border: none;
-  --mwnf-summary-padding: 0;
-  --mwnf-pagination-size: 0.8125rem;
-  --mwnf-pagination-button-border: 1px solid var(--theme-medium);
-  --mwnf-pagination-button-background: #ffffff;
-  --mwnf-pagination-button-text: var(--theme-dark);
-  --mwnf-pagination-button-hover-background: var(--background-color);
-  --mwnf-pagination-active-background: var(--theme-medium-dark);
-  --mwnf-pagination-active-text: #ffffff;
-
-  /* ---------- Navigation: the menu button and the standing notice ---------- */
-  --mwnf-nav-toggle-background: var(--theme-dark);
-  --mwnf-nav-toggle-color: #ffffff;
-  --mwnf-nav-notice-margin: 0;
-  --mwnf-nav-notice-padding: 5px 15px;
-  --mwnf-nav-notice-size: 90%;
-  --mwnf-nav-notice-background: var(--theme-dark);
-  --mwnf-nav-notice-color: #ffffff;
-
-  /* ---------- Content classes ---------- */
-  /* Only the two the gallery's own pages actually render (the partner
-     profile's "View objects" button, the loading message): legacy's own
-     `.legacy-button`/`.loader` colours, so the shared class reads as the
-     class it replaced rather than the library's neutral default. */
-  --mwnf-button-background: var(--theme-medium-dark);
-  --mwnf-button-text: #ffffff;
-  --mwnf-button-hover-background: var(--theme-dark);
-  --mwnf-loader-text: var(--theme-dark);
-
-  /* ---------- Hyperlinks: the shared library default this site's own
-     --link-blue always matched, declared explicitly now that it themes
-     library pages this site does not own the markup of ---------- */
-  --mwnf-link-text: #0000ff;
-
-  /* ---------- Content: PartnerListView ---------- */
-  /* The country-group heading, as the promoted `GalleryPartners`'s own
-     deleted `:deep(.mwnf-partner-list__group-title)` override drew it. */
-  --mwnf-partner-list-group-title-color: var(--theme-dark);
-  --mwnf-partner-list-group-border: 2px solid var(--theme-medium);
-
-  /* ---------- DXA family pages (@museumwnf/viewer-layout/dxa) ---------- */
-  /* The partner profile's tab strip/heading colour and the ivory bands
-     (language switcher, tab-strip surround, "Timeline for this Search" box)
-     the promoted pages' own deleted `:deep()` overrides drew in
-     `--theme-dark`/`--background-color` — this site's own tokens for them,
-     since `src/dxa.css`'s neutral defaults (`#1c1c1c`/`#f0f0f0`) are a
-     different site's colours. */
-  --mwnf-dxa-heading-color: var(--theme-dark);
-  --mwnf-dxa-band-background: var(--background-color);
+  --theme-dark:        __PALETTE_THEME_DARK__;         /* banner, header, footer */
+  --theme-medium-dark: __PALETTE_THEME_MEDIUM_DARK__;  /* dark menu items */
+  --theme-medium:      __PALETTE_THEME_MEDIUM__;       /* text background, search button */
+  --theme-light:       __PALETTE_THEME_LIGHT__;        /* light menu items */
+  --background-color:  __PALETTE_BACKGROUND_COLOR__;   /* page background */
 }
