@@ -12,4 +12,4 @@ jobs:
   deploy:
     # Nothing to deploy from the template itself - see ci.yml.
     if: ${{ !endsWith(github.repository, '/gallery-template') }}
-    uses: museumwithnofrontiers/viewer-workflows/.github/workflows/website-deploy-pages.yml@v1.10.0
+    uses: museumwithnofrontiers/viewer-workflows/.github/workflows/website-deploy-pages.yml@v1.13.0
