@@ -23,8 +23,8 @@ describeGallerySmoke({
   picks: {
     // An item borrowed from another project whose project carries a
     // related-database address (`manifest.projects[…].related_database_url`):
-    // its id, that project's English name, and its `projectColors` class
-    // from dataset.config.js.
+    // its id, that project's English name, and its chip class (viewer-layout's
+    // projectChips(), from the project's home_site).
     chip: {
       item: '00000000-0000-0000-0000-000000000000', // TODO(dataset)
       project: 'TODO(dataset): the project’s manifest.projects[…].name.en',

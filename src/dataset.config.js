@@ -4,23 +4,6 @@ import { galleryConfig } from '@museumwnf/viewer-layout/dxa'
 // menu and legacy redirects are the family's (`galleryConfig`,
 // @museumwnf/viewer-layout/dxa). What is this gallery's own is below.
 
-// TODO(dataset): the source-database chip's colour, per project — one entry
-// for every project id your own dataset carries in `manifest.projects`. Find
-// them in
-//
-//   https://unpkg.com/@museumwnf/__DATASET__-data@latest/manifest.json
-//
-// The class names are @museumwnf/viewer-layout's fixed chip palette
-// (`mwnf-chip--<name>`): `mwnf-chip--ISLandEPM` for Discover Islamic Art and
-// Explore Islamic Art Collections, `mwnf-chip--DBA` for Discover Baroque Art,
-// `mwnf-chip--AWE` for Sharing History, `mwnf-chip--DCA` for Discover Carpet
-// Art, `mwnf-chip--DGA` for Discover Glass Art, `mwnf-chip--Galleries` for
-// MWNF Galleries, or `mwnf-chip--EXH` for any exhibition-sourced project
-// (including this gallery's own, if it has one). The example below is
-// carpets' own map; replace it entirely.
-export const projectColors = {
-  'dcf7b4d2-03c8-568a-8209-2817950fe05e': 'mwnf-chip--DCA', // EXAMPLE — Discover Carpet Art (carpets' own project; replace with your own manifest.projects)
-}
 
 // TODO(dataset): the projects whose item sheets carry legacy's
 // Explore-partner notice. Set this to
@@ -47,7 +30,6 @@ export default galleryConfig({
   // together, and with the domain.
   origin: 'https://museumwithnofrontiers.github.io/__DATASET__',
 
-  projectColors,
   noticeProjects,
 
   // The credits page's body.
